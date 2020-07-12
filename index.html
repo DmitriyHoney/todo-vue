@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue test</title>
+</head>
+
+<style>
+	body {
+		font-family: sans-serif;
+	}
+	ul, li {
+		list-style: none;
+		padding: 0px;
+		margin: 0px;
+	}
+
+	.todo-wrap {
+		text-align: center;
+	}
+
+	.add-input {
+		border-radius: 3px;
+		padding: 5px;
+		border: none;
+		outline: none;
+		border: 1px solid rgb(160, 160, 160);
+		width: 50%;
+	}
+
+	.todo-body ul {
+		margin-top: 30px;
+		padding: 5px;
+		border: 1px solid #ccc;
+		border-radius: 3px;
+		width: 50%;
+		margin: 30px auto;
+		text-align: left;
+	}
+	.todo-body ul li{
+		display: flex;
+		align-items: center;
+		margin: 10px 0px;
+		padding-bottom: 10px;
+		border-bottom: 1px solid #ccc;
+	}
+	.todo-body ul li:last-child {
+		border-bottom: none;
+		padding-bottom: 0px;
+	}
+
+	.delete-item {
+		background-color: rgba(253, 47, 47, 0.65);
+		padding: 0px 10px;
+		cursor: pointer;
+		color: #fff;
+		font-weight: 700;
+		border-radius: 3px;
+		margin-left: auto;
+	}
+
+	.item-text {
+		margin: 0px 10px;
+	}
+
+	.checked {
+		text-decoration: line-through;
+		color: #ccc;
+		margin-left: 30px;
+	}
+
+</style>
+
+<body>
+
+	<div id="app">
+		<div class="todo-wrap">
+			<div class="todo-title">
+				<h3>ToDo List</h3>
+				<hr>
+			</div>
+			<div class="todo-head">
+				<input 
+					type="text"
+					class="add-input"
+					@keyup.enter="addItem"
+					v-model="newValueTodoItem"
+					placeholder="Добавить задачу..."	
+				>
+			</div>
+			<div class="todo-body">
+				<ul>
+					<li v-for="(item, index) of todoItems" class="todo-item">
+						<input 
+							v-if="!item.isChecked"
+							type="checkbox" 
+							v-model="item.isChecked" 
+							class="checked-input"
+						>
+						<div>
+							<span v-if="!item.isChecked && !item.editMode" class="item-text" @dblclick="editItem(index)">
+								{{item.text}}
+							</span>
+							<input type="text" v-if="item.editMode" v-model="item.text" @keyup.enter="saveEditItem(index)">
+						</div>
+						
+						<span v-if="item.isChecked" class="item-text checked">{{item.text}}</span>
+						<span 
+							class="delete-item"
+							@click="deleteItem(index)"
+						>
+							&times;
+						</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>	
+
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="test.js"></script>
+</body>
+</html>
